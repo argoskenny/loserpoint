@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="author" content="argos" />
+    <meta name="dcterms.rightsHolder" content="jazamila.com/loser/" />
+    
+    <link rel="icon" href="favicon.ico">
+
+    <title>CONTACT ME</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style type="text/css">
+      body{
+        background-color: #333;
+        background-image: url("low_contrast_linen.png");
+        background-repeat: repeat;
+        color: #DDD;
+      }
+      .container{
+        max-width: 700px;
+      }
+      .row h1{
+        letter-spacing: -3px;
+      }
+      .row{
+        margin: 30px 0px;
+      }
+      .form-group span{
+        float: right;
+        display: none;
+      }
+      .form-control{
+        font-size: 15px;
+      }
+      .btn-success{
+        font-size:15px;
+        font-weight: bold;
+        border-bottom: 5px solid #327332;
+      }
+      .btn-success:hover{
+        background-color: #5cb85c;
+        border-bottom: 5px solid #327332;
+      }
+      .btn-success:active{
+        margin-top: 3px;
+        border-bottom: 0px;
+      }
+      .contact-sucess{
+        background: #fff;
+        box-shadow: 0 0 5px rgba(0,0,0,0.3);
+        font-size: 1.3rem;
+        border: 5px solid #EFEFEF;
+        
+      }
+      .contact-sucess a{
+        color: #fff;
+        background: #4E01BB;
+      }
+      .loading{
+        margin-top: 25px;
+        height: 50px;
+        font-size: 15px;
+      }
+      #dealwithit{
+        line-height: 50px;
+      }
+      .modal-content{
+        color: #333;
+        background-color: #DDD;
+      }
+      .modal-header{
+        border-bottom: 1px solid #BDBDBD;
+      }
+      .modal-title{
+        font-weight: bold;
+      }
+      .modal-body{
+        font-size: 15px;
+      }
+      .modal-footer{
+        border-top: 1px solid #BDBDBD;
+      }
+    </style>
+  </head>
+
+<body>
+  <div class="container" id="container">
+    <div class="row">
+      <h1>CONTACT ME</h1>
+    </div>
+    <div class="row">
+            <form>
+              <div class="form-group">
+                <label for="input_name">Name</label><span class="label label-danger" id="error_name">必填 Required</span>
+                <input class="form-control" type="text" id="input_name" placeholder="Name">
+              </div>
+
+              <div class="form-group">
+              <label for="input_email">Email</label><span class="label label-danger" id="error_email">必填，格式錯誤　Required, formal error</span>
+              <input class="form-control" type="text" id="input_email" placeholder="Email">
+              </div>
+
+              <div class="form-group">
+              <label for="input_subject">Subject</label><span class="label label-danger" id="error_subject">必填 Required</span>
+              <input class="form-control" type="text" id="input_subject" placeholder="Subject">
+              </div>
+
+              <div class="form-group">
+              <label for="input_content">Message</label><span class="label label-danger" id="error_content">必填 Required</span>
+              <textarea class="form-control" id="input_content" placeholder="Message" rows="6"></textarea>
+              </div>
+
+              <div class="loading"><input class="btn btn-success" id="contact-submit" type="button" value="SEND IT"> <span style="display:none;" id="dealwithit">處理中，請稍後...</span></div>
+          </form>
+    </div>
+  </div>
+
+<div class="modal fade" id="contact-sucess">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" id="areaclose" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">送出成功</h4>
+      </div>
+      <div class="modal-body">
+        <p>你已成功送出訊息</p>
+        <p>Your message has been successfully processed.</p>
+      </div>
+      <div class="modal-footer">
+        <a href="javascript:;" class="btn btn-success" id="success_close" data-dismiss="modal">Close</a>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  
+  $('#contact-submit').click(function(){
+
+    $('.label-danger').hide();
+    var check_str = '';
+
+    if ($('#input_name').val() == '')
+    {
+      check_str += 'error_name';
+      $('#error_name').show();
+    };
+    if (!emailcheck())
+    {
+      check_str += 'error_email';
+      $('#error_email').show();
+    };
+    if ($('#input_subject').val() == '')
+    {
+      check_str += 'error_subject';
+      $('#error_subject').show();
+    };
+    if ($('#input_content').val() == '')
+    {
+      check_str += 'error_content';
+      $('#error_content').show();
+    };
+
+    if ( check_str != '' )
+    {
+      return false;
+    };
+
+    document.getElementById('contact-submit').disabled = true;
+    $('#dealwithit').show();
+    var queryData = {input_name:$('#input_name').val(),
+            input_email:$('#input_email').val(),
+            input_subject:$('#input_subject').val(),
+            input_content:$('#input_content').val()};
+    $.ajax({
+      type: "POST",
+      url: 'contact_ajax.php',
+      data: queryData,
+      dataType: 'json',
+      success: function(data)
+      {
+        if( data['status'] == 'success' )
+        {
+          $('#contact-sucess').modal('show');
+          $('#input_name').val('');
+          $('#input_email').val('');
+          $('#input_subject').val('');
+          $('#input_content').val('');
+          
+          $('#success_close #areaclose').click(function()
+          {
+            location.reload();
+          });
+          $('#dealwithit').hide();
+        }
+        else
+        {
+          alert('Something wrong...?');
+        }
+        return false;
+      }
+    });
+  });
+});
+
+function emailcheck()
+{
+  if ($('#input_email').val() == '')
+  {
+    return false;
+  }
+  var regExp = /^[^@^\s]+@[^\.@^\s]+(\.[^\.@^\s]+)+$/;
+  if ($('#input_email').val().match(regExp))
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+
+}
+
+// email格式
+function validEmail(emailtoCheck) {
+  if ( emailtoCheck.match(regExp) )
+  return true;
+  else
+  return false;
+}
+
+</script>
+</body>
+</html>
