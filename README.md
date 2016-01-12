@@ -1,7 +1,7 @@
 # loserpoint
 How you know you are a loser? Calculate your loser point
 
-http://jazamila.com/loser/
+http://loser.coderanch.com/
 
 A simple one page web app.
 It's PTT meme.
